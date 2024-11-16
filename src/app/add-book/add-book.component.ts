@@ -6,6 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { book } from '../models/book.model';
+import { BookService } from '../services/book.service';
 
 @Component({
   selector: 'app-add-book',
@@ -23,6 +24,8 @@ export class AddBookComponent {
 
   @Output() close = new EventEmitter<void>();
 
+  constructor(private bookService:BookService) {};
+
   onClose(){
     this.close.emit();
   }
@@ -32,6 +35,7 @@ export class AddBookComponent {
       name: this.bookForm.value.name || '',
       author: this.bookForm.value.author || ''
     };
+    this.bookService.addBook(this.newBook);
     this.onClose();
   }
 }

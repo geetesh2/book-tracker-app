@@ -1,34 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { AddBookComponent } from "../add-book/add-book.component";
-
-export interface books {
-  name: string;
-  position: number;
-  author: string;
-}
-
-const ELEMENT_DATA: books[] = [
-  { position: 1, name: 'Hydrogen', author: 'Narayan'},
-];
+import { AddBookComponent } from '../add-book/add-book.component';
+import { book } from '../models/book.model';
+import { BookService } from '../services/book.service';
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatDividerModule, MatIconModule, CommonModule, AddBookComponent],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    CommonModule,
+    AddBookComponent,
+  ],
   templateUrl: './book-list.component.html',
-  styleUrl: './book-list.component.css',
+  styleUrls: ['./book-list.component.css'], 
 })
-export class BookListComponent {
+export class BookListComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'author'];
-  dataSource = ELEMENT_DATA;
+  dataSource: book[] = [];
   isForm = false;
-  
-  toggleDisplay(){
+
+  constructor(private bookService: BookService) {}
+
+  ngOnInit(): void {
+    this.bookService.books$.subscribe((books) => {
+      this.dataSource = books;
+    });
+  }
+
+  toggleDisplay() {
     this.isForm = !this.isForm;
+  }
+
+  addBook(newBook: book) {
+    this.bookService.addBook(newBook); 
+    this.toggleDisplay();
   }
 }
