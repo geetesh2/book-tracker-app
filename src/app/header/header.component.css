@@ -71,3 +71,7 @@ input {
   justify-content: center;
   width: 120px;
 }
+
+button{
+  margin-left: 10px;
+}

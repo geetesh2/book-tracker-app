@@ -2,8 +2,21 @@
   <mat-toolbar-row>
     <span>Book Recommendation</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button color="warn" (click)="navigate()">
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="navigate()"
+      *ngIf="isLoggedIn"
+    >
       {{ buttonText }}
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="logout()"
+      *ngIf="isLoggedIn"
+    >
+      Logout
     </button>
   </mat-toolbar-row>
 </mat-toolbar>

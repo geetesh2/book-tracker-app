@@ -1,13 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  debounceTime,
-  delay,
-  map,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { book } from '../models/book.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -22,11 +14,6 @@ export class BookService {
 
   constructor(private http: HttpClient) {}
 
-  private mockRecommendations: book[] = [
-    { name: 'The Power of Habit', author: 'Charles Duhigg' },
-    { name: 'Deep Work', author: 'Cal Newport' },
-  ];
-
   addBook(newBook: book) {
     const currentBooks = this.booksSubject.value;
     newBook.position = currentBooks.length + 1;
@@ -36,7 +23,6 @@ export class BookService {
   getBooksRecommendations() {
     const currentBooks = this.booksSubject.value;
 
-    // Generate a query using the book names
     const query = currentBooks.map((book) => book.name).join(' OR ');
 
     return this.http
@@ -52,7 +38,6 @@ export class BookService {
             author: item.volumeInfo?.authors?.join(', ') || 'Unknown Author',
           }));
 
-          // Filter out books already read
           const filteredRecommendations = recommendations.filter(
             (rec: any) =>
               !currentBooks.some(
