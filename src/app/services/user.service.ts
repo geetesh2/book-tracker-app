@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { BookService } from './book.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +17,11 @@ export class UserService {
   private firebaseAuthUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDuM3RSW2cYftlom8mSbAG2MaCZjTcIx5o`;
   private signInUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDuM3RSW2cYftlom8mSbAG2MaCZjTcIx5o`;
 
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private bookService: BookService) {}
 
   logIn() {
     this.loggedIn = true;
-    this.router.navigate(['/books-read'])
+    this.router.navigate(['/books-read']);
     this.userSubject.next(this.loggedIn);
   }
 
@@ -30,10 +30,12 @@ export class UserService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('localId');
     localStorage.removeItem('email');
-  
+
     this.loggedIn = false;
     this.userSubject.next(this.loggedIn);
-  
+
+    this.bookService.clearbooks();
+
     console.log('User logged out successfully.');
   }
 

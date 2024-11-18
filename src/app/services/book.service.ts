@@ -10,29 +10,52 @@ export class BookService {
   private booksSubject = new BehaviorSubject<book[]>([]);
   books$ = this.booksSubject.asObservable();
 
-  private firebaseDbUrl =
-    'https://book-tracker-app-6e6fb-default-rtdb.asia-southeast1.firebasedatabase.app/books.json';
+  private firebaseDbUrl = 'https://book-tracker-app-6e6fb-default-rtdb.asia-southeast1.firebasedatabase.app';
 
   constructor(private http: HttpClient) {}
 
-  addBook(newBook: book) {
-    const currentBooks = this.booksSubject.value;
-    newBook.position = currentBooks.length + 1;
+  private getUserId(): string | null {
+    return localStorage.getItem('localId'); // Retrieve the user ID from local storage
+  }
 
-    this.http.post(this.firebaseDbUrl, newBook).subscribe({
-      next: (response) => {
-        console.log('Book added to Firebase:', response);
-        this.booksSubject.next([...currentBooks, newBook]);
-      },
-      error: (error) => {
-        console.error('Error adding book to Firebase:', error);
-      },
-    });
+  addBook(newBook: book) {
+    const userId = this.getUserId();
+    if (!userId) {
+      console.error('User ID not found! Make sure the user is logged in.');
+      return;
+    }
+
+    // Save the book to the user's node in the Firebase database
+    this.http
+      .post(
+        `${this.firebaseDbUrl}/users/${userId}/readBooks.json`,
+        newBook
+      )
+      .subscribe({
+        next: () => {
+          console.log('Book added successfully to Firebase!');
+          const currentBooks = this.booksSubject.value;
+          newBook.position = currentBooks.length + 1;
+          this.booksSubject.next([...currentBooks, newBook]);
+        },
+        error: (error) => {
+          console.error('Error adding book to Firebase:', error);
+        },
+      });
   }
 
   fetchBooks() {
+    const userId = this.getUserId();
+    if (!userId) {
+      console.error('User ID not found! Make sure the user is logged in.');
+      return;
+    }
+
+    // Fetch books from the user's node in the Firebase database
     this.http
-      .get<{ [key: string]: book }>(this.firebaseDbUrl)
+      .get<{ [key: string]: book }>(
+        `${this.firebaseDbUrl}/users/${userId}/readBooks.json`
+      )
       .pipe(
         map((responseData) => {
           const books: book[] = [];
@@ -46,6 +69,7 @@ export class BookService {
       )
       .subscribe({
         next: (books) => {
+          console.log('Books fetched successfully from Firebase:', books);
           this.booksSubject.next(books);
         },
         error: (error) => {
@@ -71,6 +95,7 @@ export class BookService {
             author: item.volumeInfo?.authors?.join(', ') || 'Unknown Author',
           }));
 
+          // Filter out books already read by the user
           const filteredRecommendations = recommendations.filter(
             (rec: any) =>
               !currentBooks.some(
@@ -83,5 +108,9 @@ export class BookService {
           return filteredRecommendations;
         })
       );
+  }
+
+  clearbooks(){
+    this.booksSubject.next([]);
   }
 }
