@@ -33,6 +33,7 @@ export class BookListComponent implements OnInit {
     this.bookService.books$.subscribe((books) => {
       this.dataSource = books;
     });
+    
   }
 
   toggleDisplay() {

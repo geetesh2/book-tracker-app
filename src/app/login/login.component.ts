@@ -26,10 +26,9 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.isSignup) {
-      this.userService.logIn();
+      this.userService.signUp(this.email, this.password);
     } else {
-      this.userService.logIn();
+      this.userService.logInUser(this.email, this.password);
     }
-    this.router.navigate(['/books-read']);
   }
 }
