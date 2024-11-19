@@ -10,10 +10,9 @@ import { BookService } from './services/book.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
-  constructor(private bookService: BookService) {}
-  title = 'book-tracker-app';
-  ngOnInit() {
-    this.bookService.fetchBooks();
+export class AppComponent{
+  constructor() {
   }
+  title = 'book-tracker-app';
+  
 }

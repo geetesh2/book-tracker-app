@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
   imports: [ReactiveFormsModule, FormsModule, CommonModule],
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit
+{
   isSignup = false;
   email = '';
   password = '';
@@ -20,6 +21,10 @@ export class LoginComponent {
 
   constructor(private userService: UserService, private router: Router) {}
 
+  ngOnInit(): void {
+    this.userService.logOut();
+  }
+  
   toggleMode() {
     this.isSignup = !this.isSignup;
   }

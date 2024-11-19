@@ -10,12 +10,13 @@ export class BookService {
   private booksSubject = new BehaviorSubject<book[]>([]);
   books$ = this.booksSubject.asObservable();
 
-  private firebaseDbUrl = 'https://book-tracker-app-6e6fb-default-rtdb.asia-southeast1.firebasedatabase.app';
+  private firebaseDbUrl =
+    'https://book-tracker-app-6e6fb-default-rtdb.asia-southeast1.firebasedatabase.app';
 
   constructor(private http: HttpClient) {}
 
   private getUserId(): string | null {
-    return localStorage.getItem('localId'); // Retrieve the user ID from local storage
+    return localStorage.getItem('localId');
   }
 
   addBook(newBook: book) {
@@ -25,12 +26,8 @@ export class BookService {
       return;
     }
 
-    // Save the book to the user's node in the Firebase database
     this.http
-      .post(
-        `${this.firebaseDbUrl}/users/${userId}/readBooks.json`,
-        newBook
-      )
+      .post(`${this.firebaseDbUrl}/users/${userId}/readBooks.json`, newBook)
       .subscribe({
         next: () => {
           console.log('Book added successfully to Firebase!');
@@ -51,7 +48,6 @@ export class BookService {
       return;
     }
 
-    // Fetch books from the user's node in the Firebase database
     this.http
       .get<{ [key: string]: book }>(
         `${this.firebaseDbUrl}/users/${userId}/readBooks.json`
@@ -80,6 +76,7 @@ export class BookService {
 
   getBooksRecommendations() {
     const currentBooks = this.booksSubject.value;
+
     const query = currentBooks.map((book) => book.name).join(' OR ');
 
     return this.http
@@ -95,22 +92,33 @@ export class BookService {
             author: item.volumeInfo?.authors?.join(', ') || 'Unknown Author',
           }));
 
-          // Filter out books already read by the user
-          const filteredRecommendations = recommendations.filter(
-            (rec: any) =>
-              !currentBooks.some(
-                (readBook) =>
-                  readBook.name.toLowerCase() === rec.name.toLowerCase() ||
-                  readBook.author.toLowerCase() === rec.author.toLowerCase()
-              )
-          );
+          const normalizeString = (str: string): string =>
+            str
+              .toLowerCase()
+              .replace(/[^a-z0-9\s]/g, '')
+              .trim();
+
+          const filteredRecommendations = recommendations.filter((rec: any) => {
+            const normalizedRecName = normalizeString(rec.name);
+            const normalizedRecAuthor = normalizeString(rec.author);
+
+            return !currentBooks.some((readBook) => {
+              const normalizedReadName = normalizeString(readBook.name);
+              const normalizedReadAuthor = normalizeString(readBook.author);
+
+              return (
+                normalizedReadName === normalizedRecName ||
+                normalizedReadAuthor === normalizedRecAuthor
+              );
+            });
+          });
 
           return filteredRecommendations;
         })
       );
   }
 
-  clearbooks(){
+  clearBooks() {
     this.booksSubject.next([]);
   }
 }

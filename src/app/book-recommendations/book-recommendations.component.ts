@@ -34,7 +34,6 @@ export class BookRecommendationsComponent implements OnInit {
           name: rec.name,
           author: rec.author,
         }));
-        console.log('Recommendations:', this.dataSource);
       },
       (error) => {
         console.error('Error fetching recommendations:', error);

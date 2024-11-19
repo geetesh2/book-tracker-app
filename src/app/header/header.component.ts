@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnDestroy {
   buttonText: string = 'Recommendations';
   isLoggedIn: boolean = false;
 
@@ -42,6 +42,9 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.userService.logOut();
-    this.router.navigate(['/login']);
+  }
+
+  ngOnDestroy(): void {
+    this.userService.logOut();
   }
 }
