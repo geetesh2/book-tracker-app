@@ -33,6 +33,7 @@ export class BookRecommendationsComponent implements OnInit {
           position: index + 1,
           name: rec.name,
           author: rec.author,
+          url: rec.url
         }));
       },
       (error) => {

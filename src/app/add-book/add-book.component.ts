@@ -19,6 +19,7 @@ export class AddBookComponent {
   bookForm = new FormGroup({
     name: new FormControl(''),
     author: new FormControl(''),
+    imageUrl: new FormControl('')
   });
    newBook: book | null = null;
 
@@ -33,7 +34,8 @@ export class AddBookComponent {
   onSubmit(){
     this.newBook = {
       name: this.bookForm.value.name || '',
-      author: this.bookForm.value.author || ''
+      author: this.bookForm.value.author || '',
+      url: this.bookForm.value.imageUrl || ''
     };
     this.bookService.addBook(this.newBook);
     this.onClose();

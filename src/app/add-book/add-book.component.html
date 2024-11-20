@@ -1,19 +1,33 @@
 <div class="overlay">
-    <div class="form-container">
-      <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
-        <label for="book-name">Book Name: </label>
-        <input id="book-name" type="text" formControlName="name">
-        
-        <label for="author-name">Author Name: </label>
-        <input id="author-name" type="text" formControlName="author">
-        
-        <div class="example-button-row">
-            <button mat-raised-button color="primary" type="submit">Submit</button>        
-        </div>
-        <div class="example-button-row">
-            <button mat-raised-button color="warn" type="submit" (click)="onClose()">Cancel</button>        
-        </div>
-      </form>
-    </div>
+  <div class="form-container">
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+      <label for="book-name">Book Name: </label>
+      <input id="book-name" type="text" formControlName="name" />
+
+      <label for="author-name">Author Name: </label>
+      <input id="author-name" type="text" formControlName="author" />
+
+      <label for="image-url">Image URL: </label>
+      <input
+        id="image-url"
+        type="text"
+        formControlName="imageUrl"
+        placeholder="Enter Image URL"
+      />
+
+      <div class="example-button-row">
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </div>
+      <div class="example-button-row">
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onClose()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
   </div>
-  
+</div>
