@@ -32,7 +32,6 @@ export class BookService {
         next: () => {
           console.log('Book added successfully to Firebase!');
           const currentBooks = this.booksSubject.value;
-          newBook.position = currentBooks.length + 1;
           this.booksSubject.next([...currentBooks, newBook]);
         },
         error: (error) => {
@@ -57,7 +56,7 @@ export class BookService {
           const books: book[] = [];
           for (const key in responseData) {
             if (responseData.hasOwnProperty(key)) {
-              books.push({ ...responseData[key], position: books.length + 1 });
+              books.push({ ...responseData[key] });
             }
           }
           return books;
@@ -90,7 +89,9 @@ export class BookService {
           const recommendations = response.items.map((item: any) => ({
             name: item.volumeInfo?.title || 'Unknown Title',
             author: item.volumeInfo?.authors?.join(', ') || 'Unknown Author',
-            url: item.volumeInfo?.imageLinks?.thumbnail || './assets/default-thumbnail.png'
+            url:
+              item.volumeInfo?.imageLinks?.thumbnail ||
+              './assets/default-thumbnail.png',
           }));
 
           const normalizeString = (str: string): string =>
@@ -122,4 +123,75 @@ export class BookService {
   clearBooks() {
     this.booksSubject.next([]);
   }
+
+  deleteBooks(position: number): void {
+    const userId = this.getUserId();
+    if (!userId) {
+      console.error('User ID not found! Make sure the user is logged in.');
+      return;
+    }
+  
+    // Fetch the current list of books
+    const currentBooks = this.booksSubject.value;
+  
+    // Get the book to be deleted based on position
+    const bookToDelete = currentBooks[position];
+  
+    if (!bookToDelete) {
+      console.error('Book not found at the specified position.');
+      return;
+    }
+  
+    // Get Firebase key for the book
+    this.http
+      .get<{ [key: string]: book }>(
+        `${this.firebaseDbUrl}/users/${userId}/readBooks.json`
+      )
+      .pipe(
+        map((responseData) => {
+          // Find the key of the book to delete
+          for (const key in responseData) {
+            if (
+              responseData[key].name === bookToDelete.name &&
+              responseData[key].author === bookToDelete.author
+            ) {
+              return key; // Return the key
+            }
+          }
+          return null; // If no match found
+        })
+      )
+      .subscribe({
+        next: (key) => {
+          if (!key) {
+            console.error('Book key not found in Firebase.');
+            return;
+          }
+  
+          // Delete the book from Firebase
+          this.http
+            .delete(
+              `${this.firebaseDbUrl}/users/${userId}/readBooks/${key}.json`
+            )
+            .subscribe({
+              next: () => {
+                console.log('Book deleted successfully from Firebase.');
+  
+                // Update the local list
+                const updatedBooks = currentBooks.filter(
+                  (_, index) => index !== position
+                );
+                this.booksSubject.next(updatedBooks);
+              },
+              error: (error) => {
+                console.error('Error deleting book from Firebase:', error);
+              },
+            });
+        },
+        error: (error) => {
+          console.error('Error fetching book keys from Firebase:', error);
+        },
+      });
+  }
+  
 }

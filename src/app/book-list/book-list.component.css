@@ -37,7 +37,7 @@ table {
   }
   
   .cards-container {
-    height: fit-content;
+    height: 80vh;
     width: 90vw;
     margin: auto;
   }

@@ -56,4 +56,10 @@ export class BookListComponent implements OnInit {
     this.bookService.addBook(newBook);
     this.toggleDisplay();
   }
+
+  deleteBook(pos: number){
+    if (confirm('Are you sure you want to delete this book?')) {
+      this.bookService.deleteBooks(pos);
+    }
+  }
 }
