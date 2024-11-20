@@ -34,4 +34,21 @@ table {
     width: 120px;
   }
   
+  .cards-container {
+    height: fit-content;
+    width: 90vw;
+    margin: auto;
+  }
   
+  .book-card {
+    width: fit-content;
+    max-width: 320px;
+    display: flex;
+    margin: auto;
+    align-items: center;
+  }
+  
+  img{
+    width: 140px;
+    height: 150px;
+  }

@@ -1,18 +1,13 @@
-<section>
-  <div class="example-button-row">
-    <button mat-raised-button color="primary" (click)="toggleDisplay()">Add New Book</button>
-  </div>
-</section>
-<mat-divider></mat-divider>
+
 
 <!-- Form for adding a new book -->
-<div *ngIf="isForm">
+<div *ngIf="isForm" >
   <app-add-book (close)="toggleDisplay()"></app-add-book>
 </div>
 
 <!-- Cards Layout -->
 <div class="cards-container">
-  <mat-grid-list cols="3" rowHeight="1:1" gutterSize="16px">
+  <mat-grid-list cols="5" rowHeight="1:1" gutterSize="16px">
     <mat-grid-tile *ngFor="let book of dataSource">
       <mat-card class="book-card">
         <mat-card-header>
@@ -21,6 +16,18 @@
         <mat-card-content>
           <mat-card-title>{{ book.name }}</mat-card-title>
           <mat-card-subtitle>Author: {{ book.author }}</mat-card-subtitle>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="book-card" (click)="toggleDisplay()">
+        <mat-card-content>
+          <div class="add-book-content">
+            <h5>Done with  another book ?</h5>
+            <h5>Click this to</h5>
+            <h5>Add it here.</h5>
+          </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

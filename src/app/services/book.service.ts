@@ -90,6 +90,7 @@ export class BookService {
           const recommendations = response.items.map((item: any) => ({
             name: item.volumeInfo?.title || 'Unknown Title',
             author: item.volumeInfo?.authors?.join(', ') || 'Unknown Author',
+            url: item.volumeInfo?.imageLinks?.thumbnail || './assets/default-thumbnail.png'
           }));
 
           const normalizeString = (str: string): string =>

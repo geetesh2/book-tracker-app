@@ -16,6 +16,8 @@ table {
   .example-button-row {
     display: table-cell;
     max-width: 600px;
+    position: relative;
+    left: 90vw;
   }
   
   .example-button-row .mat-mdc-button-base {
@@ -36,11 +38,15 @@ table {
   
   .cards-container {
     height: fit-content;
+    width: 90vw;
+    margin: auto;
   }
   
   .book-card {
     width: fit-content;
     max-width: 320px;
+    height: fit-content;
+    min-height: 230px;
     display: flex;
     margin: auto;
     align-items: center;
@@ -49,4 +55,10 @@ table {
   img{
     width: 140px;
     height: 150px;
+  }
+
+  .add-book-content{
+    height: 100%;
+    align-content: center;
+    justify-content: center;
   }
