@@ -130,18 +130,18 @@ export class BookService {
       console.error('User ID not found! Make sure the user is logged in.');
       return;
     }
-  
+
     // Fetch the current list of books
     const currentBooks = this.booksSubject.value;
-  
+
     // Get the book to be deleted based on position
     const bookToDelete = currentBooks[position];
-  
+
     if (!bookToDelete) {
       console.error('Book not found at the specified position.');
       return;
     }
-  
+
     // Get Firebase key for the book
     this.http
       .get<{ [key: string]: book }>(
@@ -167,7 +167,7 @@ export class BookService {
             console.error('Book key not found in Firebase.');
             return;
           }
-  
+
           // Delete the book from Firebase
           this.http
             .delete(
@@ -176,7 +176,7 @@ export class BookService {
             .subscribe({
               next: () => {
                 console.log('Book deleted successfully from Firebase.');
-  
+
                 // Update the local list
                 const updatedBooks = currentBooks.filter(
                   (_, index) => index !== position
@@ -193,5 +193,51 @@ export class BookService {
         },
       });
   }
-  
+
+  editBook(pos: number | null, updatedBook: book | null): void {
+    const books = this.booksSubject.value;
+    const userId = this.getUserId();
+
+    if (!userId) {
+      console.error('User ID not found! Make sure the user is logged in.');
+      return;
+    }
+
+    // Get the book's unique key from Firebase (assuming you store it as part of the data model)
+    this.http
+      .get<{ [key: string]: book }>(
+        `${this.firebaseDbUrl}/users/${userId}/readBooks.json`
+      )
+      .subscribe({
+        next: (responseData) => {
+          const keys = Object.keys(responseData || {});
+          const bookKey = keys[pos!]; // Retrieve the key for the book to edit
+
+          if (!bookKey) {
+            console.error('Book key not found for the given position.');
+            return;
+          }
+
+          // Make the HTTP PUT request to update the book
+          this.http
+            .put(
+              `${this.firebaseDbUrl}/users/${userId}/readBooks/${bookKey}.json`,
+              updatedBook
+            )
+            .subscribe({
+              next: () => {
+                console.log('Book updated successfully in Firebase!');
+                books[pos!] = updatedBook!; // Update the local copy
+                this.booksSubject.next([...books]); // Update the observable
+              },
+              error: (error) => {
+                console.error('Error updating book in Firebase:', error);
+              },
+            });
+        },
+        error: (error) => {
+          console.error('Error retrieving book keys from Firebase:', error);
+        },
+      });
+  }
 }

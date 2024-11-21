@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userService.user$.pipe(takeUntilDestroyed()).subscribe((value: boolean) => {
+    this.userService.user$.subscribe((value: boolean) => {
       this.isLoggedIn = value;
     });
   }

@@ -37,7 +37,8 @@ export class BookListComponent implements OnInit, OnDestroy {
   dataSource: book[] = [];
   isForm = false;
   destroyed = new Subject();
-
+  selectedBook: book|null = null;
+  pos: number|null = null;
   constructor(private bookService: BookService) {}
 
   ngOnInit(): void {
@@ -64,6 +65,12 @@ export class BookListComponent implements OnInit, OnDestroy {
     if (confirm('Are you sure you want to delete this book?')) {
       this.bookService.deleteBooks(pos);
     }
+  }
+
+  editBook(book:book,pos:number){
+    this.selectedBook = book;
+    this.pos = pos;
+    this.toggleDisplay();
   }
 
   ngOnDestroy(): void {

@@ -2,7 +2,7 @@
 
 <!-- Form for adding a new book -->
 <div *ngIf="isForm" >
-  <app-add-book (close)="toggleDisplay()"></app-add-book>
+  <app-add-book (close)="toggleDisplay()" [bookToEdit]="selectedBook" [index]="pos"></app-add-book>
 </div>
 
 <!-- Cards Layout -->
@@ -19,6 +19,7 @@
         </mat-card-content>
         <mat-card-footer>
           <mat-icon (click)="deleteBook(i)">delete</mat-icon>
+          <mat-icon (click)="editBook(book,i)">edit</mat-icon>
         </mat-card-footer>
       </mat-card>
     </mat-grid-tile>
