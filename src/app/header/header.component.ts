@@ -5,6 +5,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 
 @Component({
   selector: 'app-header',
@@ -27,7 +29,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userService.user$.subscribe((value: boolean) => {
+    this.userService.user$.pipe(takeUntilDestroyed()).subscribe((value: boolean) => {
       this.isLoggedIn = value;
     });
   }
