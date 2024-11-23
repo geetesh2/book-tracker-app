@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { book } from '../models/book.model';
 import { BookService } from '../services/book.service';
 import { MatTableModule } from '@angular/material/table';
@@ -33,12 +33,17 @@ export class BookRecommendationsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'author'];
   dataSource: book[] = [];
   isForm = false;
+  gridCols: number = 5; // Default number of columns
 
   constructor(private bookService: BookService) {}
 
+  
+
   ngOnInit(): void {
     this.fetchRecommendations();
+    this.adjustGridCols();
   }
+
 
   fetchRecommendations() {
     this.bookService.getBooksRecommendations().subscribe(
@@ -64,4 +69,21 @@ export class BookRecommendationsComponent implements OnInit {
     this.bookService.addBook(newBook);
     this.toggleDisplay();
   }
+
+  @HostListener('window:resize')
+  adjustGridCols(): void {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth >= 1200) {
+      this.gridCols = 5; // Large screens
+    } else if (screenWidth >= 900) {
+      this.gridCols = 3; // Medium screens
+    } else if (screenWidth >= 600) {
+      this.gridCols = 2; // Small screens
+    } else {
+      this.gridCols = 1; // Extra small screens
+    }
+  }
 }
+
+
