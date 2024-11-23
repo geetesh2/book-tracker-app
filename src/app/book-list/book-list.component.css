@@ -1,64 +1,65 @@
-table {
-    width: 100%;
-  }
-  
-  section {
-    display: table;
-  }
-  
-  .example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 8px;
-    min-width: 120px;
-  }
-  
-  .example-button-row {
-    display: table-cell;
-    max-width: 600px;
-    position: relative;
-    left: 90vw;
-  }
-  
-  .example-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  
-  .example-flex-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  .example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
-  }
-  
-  .cards-container {
-    height: 80vh;
-    width: 90vw;
-    margin: auto;
-  }
-  
-  .book-card {
-    width: fit-content;
-    max-width: 320px;
-    height: fit-content;
-    min-height: 230px;
-    display: flex;
-    margin: auto;
-    align-items: center;
-  }
-  
-  img{
-    width: 140px;
-    height: 150px;
-  }
+.cards-container {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  text-align: left;
+  align-items: normal;
+}
 
-  .add-book-content{
-    height: 100%;
-    align-content: center;
-    justify-content: center;
+.book-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background-color: #f5f5f5;
+  height: fit-content;
+  width: fit-content;
+  min-height: 20%;
+  min-width: 10vw;
+}
+
+img {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.add-book-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  background-color: #f5f5f5;
+  height: fit-content;
+  width: fit-content;
+}
+
+.add-book-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+@media (max-width: 1200px) {
+  .cards-container {
+    padding: 8px;
   }
+}
+
+@media (max-width: 900px) {
+  img {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  .add-book-content {
+    font-size: 14px;
+  }
+}

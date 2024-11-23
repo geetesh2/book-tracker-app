@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,9 +37,26 @@ export class BookListComponent implements OnInit, OnDestroy {
   dataSource: book[] = [];
   isForm = false;
   destroyed = new Subject();
-  selectedBook: book|null = null;
-  pos: number|null = null;
+  selectedBook: book | null = null;
+  pos: number | null = null;
+  gridCols: number = 5; // Default number of columns
+
   constructor(private bookService: BookService) {}
+
+  @HostListener('window:resize')
+  adjustGridCols(): void {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth >= 1200) {
+      this.gridCols = 5; // Desktop
+    } else if (screenWidth >= 900) {
+      this.gridCols = 4; // Medium devices
+    } else if (screenWidth >= 600) {
+      this.gridCols = 3; // Small devices
+    } else {
+      this.gridCols = 2; // Mobile
+    }
+  }
 
   ngOnInit(): void {
     this.bookService.books$
@@ -49,6 +66,9 @@ export class BookListComponent implements OnInit, OnDestroy {
 
         this.dataSource = books;
       });
+
+    this.adjustGridCols(); // Adjust columns on load
+    window.addEventListener('resize', this.adjustGridCols.bind(this));
   }
 
   toggleDisplay() {
@@ -67,7 +87,7 @@ export class BookListComponent implements OnInit, OnDestroy {
     }
   }
 
-  editBook(book:book,pos:number){
+  editBook(book: book, pos: number) {
     this.selectedBook = book;
     this.pos = pos;
     this.toggleDisplay();
@@ -76,5 +96,6 @@ export class BookListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed.next(null);
     this.destroyed.complete();
+    window.removeEventListener('resize', this.adjustGridCols.bind(this));
   }
 }

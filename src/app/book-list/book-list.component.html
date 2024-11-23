@@ -1,34 +1,38 @@
 
-
 <!-- Form for adding a new book -->
-<div *ngIf="isForm" >
-  <app-add-book (close)="toggleDisplay()" [bookToEdit]="selectedBook" [index]="pos"></app-add-book>
+<div *ngIf="isForm">
+  <app-add-book
+    (close)="toggleDisplay()"
+    [bookToEdit]="selectedBook"
+    [index]="pos"
+  ></app-add-book>
 </div>
 
-<!-- Cards Layout -->
+<!-- Responsive Cards Layout -->
 <div class="cards-container">
-  <mat-grid-list cols="5" rowHeight="1:1" gutterSize="5vh">
+  <mat-grid-list
+    [cols]="gridCols"
+    rowHeight="1:1.5"
+    gutterSize="16px"
+    class="responsive-grid"
+  >
     <mat-grid-tile *ngFor="let book of dataSource; let i = index">
       <mat-card class="book-card">
-        <mat-card-header>
-          <img mat-card-image [src]="book.url" alt="{{ book.name }}" />
-        </mat-card-header>
         <mat-card-content>
+          <img mat-card-image [src]="book.url" alt="{{ book.name }}" />
           <mat-card-title>{{ book.name }}</mat-card-title>
           <mat-card-subtitle>Author: {{ book.author }}</mat-card-subtitle>
-        </mat-card-content>
-        <mat-card-footer>
           <mat-icon (click)="deleteBook(i)">delete</mat-icon>
-          <mat-icon (click)="editBook(book,i)">edit</mat-icon>
-        </mat-card-footer>
+          <mat-icon (click)="editBook(book, i)">edit</mat-icon> 
+        </mat-card-content>
       </mat-card>
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <mat-card class="book-card" (click)="toggleDisplay()">
+      <mat-card class="book-card add-book-card" (click)="toggleDisplay()">
         <mat-card-content>
           <div class="add-book-content">
-            <h5>Done with  another book ?</h5>
+            <h5>Done with another book?</h5>
             <h5>Click this to</h5>
             <h5>Add it here.</h5>
           </div>
