@@ -1,22 +1,55 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
+    <button
+      mat-icon-button
+      class="menu-icon"
+      (click)="toggleSidenav()"
+      *ngIf="isSmallScreen"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
     <span>Book Recommendation</span>
     <span class="example-spacer"></span>
-    <button
-      mat-raised-button
-      color="accent"
-      (click)="navigate()"
-      *ngIf="isLoggedIn"
-    >
-      {{ buttonText }}
-    </button>
-    <button
-      mat-raised-button
-      color="warn"
-      (click)="logout()"
-      *ngIf="isLoggedIn"
-    >
-      Logout
-    </button>
+    <ng-container *ngIf="!isSmallScreen">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="navigate()"
+        *ngIf="isLoggedIn"
+      >
+        {{ buttonText }}
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="logout()"
+        *ngIf="isLoggedIn"
+      >
+        Logout
+      </button>
+    </ng-container>
   </mat-toolbar-row>
 </mat-toolbar>
+
+<!-- Custom Sidenav -->
+<div class="custom-sidenav-overlay" *ngIf="isSidenavOpen" (click)="toggleSidenav()"></div>
+<nav class="custom-sidenav" [class.open]="isSidenavOpen">
+  <button
+    class="custom-sidenav-item"
+    (click)="navigate(); toggleSidenav()"
+    *ngIf="isLoggedIn"
+  >
+    {{ buttonText }}
+  </button>
+  <button
+    class="custom-sidenav-item"
+    (click)="logout(); toggleSidenav()"
+    *ngIf="isLoggedIn"
+  >
+    Logout
+  </button>
+</nav>
+
+<div class="main-content">
+  <ng-content></ng-content>
+</div>

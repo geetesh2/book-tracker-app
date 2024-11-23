@@ -1,36 +1,55 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { UserService } from '../services/user.service';
-import { CommonModule } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+// Angular Material Modules
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
+import { CommonModule } from '@angular/common'; // Required for basic Angular directives like *ngIf, *ngFor
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, CommonModule],
+  imports: [
+    CommonModule,
+    MatToolbarModule,  // For mat-toolbar
+    MatButtonModule,   // For mat-raised-button and mat-icon-button
+    MatIconModule,     // For mat-icon
+  ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit,OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
   buttonText: string = 'Recommendations';
   isLoggedIn: boolean = false;
+  isSmallScreen: boolean = false;
+  isSidenavOpen: boolean = false;
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private breakpointObserver: BreakpointObserver
+  ) {}
+
+  ngOnInit(): void {
+    this.userService.user$.subscribe((value: boolean) => {
+      this.isLoggedIn = value;
+    });
+
+    this.breakpointObserver
+      .observe([Breakpoints.Handset])
+      .subscribe((result) => {
+        this.isSmallScreen = result.matches;
+      });
+
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;
       this.buttonText = currentRoute.includes('books-read')
         ? 'Recommendations'
         : 'Read Books';
-    });
-  }
-
-  ngOnInit(): void {
-    this.userService.user$.subscribe((value: boolean) => {
-      this.isLoggedIn = value;
     });
   }
 
@@ -44,6 +63,10 @@ export class HeaderComponent implements OnInit,OnDestroy {
 
   logout() {
     this.userService.logOut();
+  }
+
+  toggleSidenav() {
+    this.isSidenavOpen = !this.isSidenavOpen;
   }
 
   ngOnDestroy(): void {

@@ -1,77 +1,63 @@
+/* Toolbar Spacer */
 .example-spacer {
-    flex: 1 1 auto;
-  }
-  
+  flex: 1 1 auto;
+}
 
-  /* Full-screen overlay background */
-.overlay {
+/* Custom Sidenav Styles */
+.custom-sidenav {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Hidden off-screen */
+  width: 250px;
+  height: 100%;
+  background-color: #3f51b5;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out; /* Smooth sliding effect */
+}
+
+.custom-sidenav.open {
+  transform: translateX(200px); /* Slide-in effect */
+  left: 0;
+}
+
+.custom-sidenav-item {
+  margin: 10px 0;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.custom-sidenav-item:hover {
+  background-color: #5c6bc0;
+  border-radius: 5px;
+}
+
+/* Overlay to dim the background when sidenav is open */
+.custom-sidenav-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
-  z-index: 1000; /* Ensures it's above other elements */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  z-index: 999;
 }
 
-/* Form container */
-.form-container {
-  background: #ffffff; /* White background for the form */
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-  width: 90%;
-  max-width: 500px;
-}
-
-/* Form fields and labels */
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-
-
-.example-label {
-  display: table-cell;
-  font-size: 14px;
-  margin-left: 8px;
-  min-width: 120px;
-}
-
-.example-button-row {
-  display: table-cell;
-  max-width: 600px;
-}
-
-.example-button-row .mat-mdc-button-base {
-  margin: 8px 8px 8px 0;
-}
-
-.example-flex-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.example-button-container {
-  display: flex;
-  justify-content: center;
-  width: 120px;
+/* Main content */
+.main-content {
+  margin: 0;
+  padding: 1rem;
 }
 
 button{
-  margin-left: 10px;
+  margin-left: 5px;
 }
