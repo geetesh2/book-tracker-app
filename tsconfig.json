@@ -20,7 +20,11 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["src/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -29,7 +33,7 @@
     "strictTemplates": true
   },
   "include": [
-    "src/**/*.ts",              // Include all TypeScript files
-    "src/environments/**/*.ts"   // Include environment TypeScript files
+    "src/**/*.ts",              
+    "src/environments/**/*.ts" 
   ]
 }

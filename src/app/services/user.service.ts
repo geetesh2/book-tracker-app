@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BookService } from './book.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,7 @@ export class UserService {
 
     return this.http
       .post<any>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDuM3RSW2cYftlom8mSbAG2MaCZjTcIx5o
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseApikey}
 `,
         payload
       )
@@ -80,7 +81,7 @@ export class UserService {
 
     return this.http
       .post<any>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDuM3RSW2cYftlom8mSbAG2MaCZjTcIx5o
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseApikey}
 `,
         payload
       )
