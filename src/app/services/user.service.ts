@@ -47,7 +47,6 @@ export class UserService {
     this.userSubject.next(this.loggedIn);
     this.bookService.clearBooks();
 
-    console.log('User logged out successfully.');
     this.router.navigate(['/login']);
   }
 
@@ -69,7 +68,6 @@ export class UserService {
           localStorage.setItem('email', response.email);
 
           this.logIn();
-          console.log('User signed up successfully:', response);
         },
         (error) => {
           console.error('Error during signup:', error);
@@ -95,7 +93,6 @@ export class UserService {
           localStorage.setItem('email', response.email);
 
           this.logIn();
-          console.log('User logged in successfully:', response);
         },
         (error) => {
           console.error('Error during login:', error);

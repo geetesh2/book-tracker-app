@@ -30,7 +30,6 @@ export class BookService {
       .post(`${this.firebaseDbUrl}/users/${userId}/readBooks.json`, newBook)
       .subscribe({
         next: () => {
-          console.log('Book added successfully to Firebase!');
           const currentBooks = this.booksSubject.value;
           this.booksSubject.next([...currentBooks, newBook]);
         },
@@ -64,7 +63,6 @@ export class BookService {
       )
       .subscribe({
         next: (books) => {
-          console.log('Books fetched successfully from Firebase:', books);
           this.booksSubject.next(books);
         },
         error: (error) => {
@@ -175,8 +173,6 @@ export class BookService {
             )
             .subscribe({
               next: () => {
-                console.log('Book deleted successfully from Firebase.');
-
                 // Update the local list
                 const updatedBooks = currentBooks.filter(
                   (_, index) => index !== position
@@ -226,7 +222,6 @@ export class BookService {
             )
             .subscribe({
               next: () => {
-                console.log('Book updated successfully in Firebase!');
                 books[pos!] = updatedBook!; // Update the local copy
                 this.booksSubject.next([...books]); // Update the observable
               },

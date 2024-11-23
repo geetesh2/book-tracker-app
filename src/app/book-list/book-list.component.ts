@@ -62,7 +62,6 @@ export class BookListComponent implements OnInit, OnDestroy {
     this.bookService.books$
       .pipe(takeUntil(this.destroyed))
       .subscribe((books) => {
-        console.log(books);
 
         this.dataSource = books;
       });
@@ -73,7 +72,6 @@ export class BookListComponent implements OnInit, OnDestroy {
 
   toggleDisplay() {
     this.isForm = !this.isForm;
-    console.log(this.dataSource);
   }
 
   addBook(newBook: book) {
