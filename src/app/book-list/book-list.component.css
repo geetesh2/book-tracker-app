@@ -1,82 +1,214 @@
 .cards-container {
   width: 90vw;
-  margin: auto;
+  margin: 32px auto;
   padding: 16px;
   box-sizing: border-box;
+  background: #f3f6fb;
+  border-radius: 12px;
+  overflow: visible;
 }
 
 .responsive-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  overflow: visible;
+}
+
+mat-grid-tile {
+  overflow: visible !important;
 }
 
 .book-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between;  /* Ensures that content is spaced correctly */
   align-items: center;
   text-align: center;
   padding: 16px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   cursor: pointer;
   background-color: #fff;
+  height: auto;  /* Set height to auto to allow dynamic content height */
+  min-height: 350px; /* Ensure a minimum height */
+  overflow: hidden;
 }
 
 .book-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.img-container {
+  height: 180px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
 }
 
 img {
   max-width: 100%;
-  max-height: 150px;
-  object-fit: cover;
+  max-height: 180px;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.book-card:hover img {
+  transform: scale(1.08);
+}
+
+mat-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 8px 0;
+  color: #333;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+mat-card-subtitle {
+  color: #666;
+  font-size: 14px;
   margin-bottom: 12px;
 }
 
-.add-book-card {
+.card-actions {
   display: flex;
   justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
+  gap: 16px;
+  margin-top: 12px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.book-card:hover .card-actions {
+  opacity: 1;
+}
+
+.edit-btn {
+  color: #3f51b5;
+}
+
+.delete-btn {
+  color: #f44336;
+}
+
+.add-book-card {
+  background: linear-gradient(135deg, #e8f0fe 0%, #d4e4fa 100%);
   color: #3f51b5;
   font-weight: bold;
+  border: 2px dashed #3f51b5;
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.1);
+  transform-origin: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 12px;
 }
 
 .add-book-card:hover {
-  background-color: #e0e0e0;
+  animation: pulse 1s ease-out;
 }
 
-.add-book-content h5 {
-  margin: 4px 0;
-}
-
-/* Responsive Grid Styles */
-@media (max-width: 1200px) {
-  .cards-container {
-    width: 95vw;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(63, 81, 181, 0.4);
+  }
+  70% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 10px rgba(63, 81, 181, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(63, 81, 181, 0);
   }
 }
 
+.add-book-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-book-content h3 {
+  margin: 12px 0 8px;
+  font-weight: 600;
+  color: #3f51b5;
+}
+
+.add-book-content p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.add-icon {
+  font-size: 42px;
+  height: 42px;
+  width: 42px;
+  color: #3f51b5;
+  margin-bottom: 12px;
+}
+
+.no-data-message {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 16px;
+  color: #888;
+}
+
+.no-data-message mat-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  color: #ccc;
+}
+
 @media (max-width: 900px) {
+  .img-container {
+    height: 150px;
+  }
+
   img {
-    max-height: 120px;
+    max-height: 150px;
+  }
+
+  .book-card {
+    min-height: 300px;  /* Adjust height for smaller screens */
   }
 }
 
 @media (max-width: 600px) {
   .cards-container {
-    padding: 8px;
+    padding: 12px;
+    margin: 16px auto;
+  }
+
+  .responsive-grid {
+    gap: 16px;
   }
 
   .book-card {
-    padding: 8px;
-    font-size: 14px;
+    padding: 12px;
+    min-height: 280px;  /* Adjust height for smaller screens */
+  }
+
+  .img-container {
+    height: 120px;
   }
 
   img {
-    max-height: 100px;
+    max-height: 120px;
+  }
+
+  mat-card-title {
+    font-size: 16px;
   }
 }

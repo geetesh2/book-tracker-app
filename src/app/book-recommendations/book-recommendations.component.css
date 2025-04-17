@@ -3,31 +3,75 @@
   margin: auto;
   padding: 16px;
   box-sizing: border-box;
+  background: #f4f6f9; /* Light neutral background */
+  border-radius: 12px;
 }
 
+/* Grid tile content styling */
+mat-grid-tile {
+  background: transparent !important;
+}
+
+/* Book card */
 .book-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
-  padding: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
   transition: transform 0.3s ease-in-out;
+  background-color: #ffffff;
 }
 
 .book-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+}
+
+/* Book image */
 img {
-  max-width: 100%;
-  max-height: 150px;
-  object-fit: cover;
+  width: auto;
+  height: 130px;
+  max-height: 130px;
+  object-fit: contain;
   margin-bottom: 8px;
+  border-radius: 4px;
 }
 
-/* Responsive Grid Styles */
+/* Book title */
+mat-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  max-height: 66px;
+  line-height: 1.1em;
+  margin-bottom: 4px;
+}
+
+/* Book author */
+mat-card-subtitle {
+  font-size: 14px;
+  color: #555;
+  white-space: normal;
+}
+
+/* Responsive Styles */
 @media (max-width: 1200px) {
   .cards-container {
     width: 100%;
@@ -36,11 +80,19 @@ img {
 
 @media (max-width: 900px) {
   .book-card {
-    padding: 4px;
+    padding: 8px;
   }
 
   img {
-    max-height: 120px;
+    height: 110px;
+  }
+
+  mat-card-title {
+    font-size: 15px;
+  }
+
+  mat-card-subtitle {
+    font-size: 13px;
   }
 }
 
@@ -54,6 +106,14 @@ img {
   }
 
   img {
-    max-height: 100px;
+    height: 100px;
+  }
+
+  mat-card-title {
+    font-size: 14px;
+  }
+
+  mat-card-subtitle {
+    font-size: 12px;
   }
 }

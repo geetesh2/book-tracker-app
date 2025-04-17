@@ -1,14 +1,19 @@
 <div class="cards-container">
+  <div *ngIf="dataSource.length === 0" class="no-data">
+    <mat-icon>search_off</mat-icon>
+    <p>No book recommendations found.</p>
+  </div>
+
   <mat-grid-list
+    *ngIf="dataSource.length > 0"
     [cols]="gridCols"
-    rowHeight="1:1.2"
+    rowHeight="350px"
     gutterSize="16px"
   >
     <mat-grid-tile *ngFor="let book of dataSource">
       <mat-card class="book-card">
-        <mat-card-header>
-          <img mat-card-image [src]="book.url" alt="{{ book.name }}" />
-        </mat-card-header>
+        <img mat-card-image [src]="book.url" alt="{{ book.name }}" />
+
         <mat-card-content>
           <mat-card-title>{{ book.name }}</mat-card-title>
           <mat-card-subtitle>Author: {{ book.author }}</mat-card-subtitle>

@@ -23,17 +23,6 @@
       />
     </div>
 
-    <div *ngIf="isSignup" class="form-group">
-      <label for="confirmPassword">Confirm Password</label>
-      <input
-        type="password"
-        id="confirmPassword"
-        [(ngModel)]="confirmPassword"
-        name="confirmPassword"
-        required
-      />
-    </div>
-
     <button type="submit" class="btn">
       {{ isSignup ? "Sign Up" : "Log In" }}
     </button>
