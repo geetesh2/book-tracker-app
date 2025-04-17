@@ -1,3 +1,4 @@
+<!-- Show Add Book Form -->
 <div *ngIf="isForm">
   <app-add-book
     (close)="toggleDisplay()"
@@ -6,13 +7,25 @@
   ></app-add-book>
 </div>
 
+<!-- Book Cards Container -->
 <div class="cards-container">
+  <!-- Empty State -->
+  <div *ngIf="dataSource.length === 0" class="no-data-message">
+    <mat-icon>library_books</mat-icon>
+    <h2>No books added yet</h2>
+    <p>Click below to start building your reading list!</p>
+    <button mat-raised-button color="primary" (click)="toggleDisplay()">Add Your First Book</button>
+  </div>
+
+  <!-- Book Grid -->
   <mat-grid-list
+    *ngIf="dataSource.length > 0"
     [cols]="gridCols"
     rowHeight="1:1.5"
     gutterSize="16px"
     class="responsive-grid"
   >
+    <!-- Book Card -->
     <mat-grid-tile *ngFor="let book of dataSource; let i = index">
       <mat-card class="book-card">
         <mat-card-content>
@@ -20,7 +33,8 @@
             <img mat-card-image [src]="book.url" alt="{{ book.name }}" />
           </div>
           <mat-card-title>{{ book.name }}</mat-card-title>
-          <mat-card-subtitle>Author: {{ book.author }}</mat-card-subtitle>
+          <mat-card-subtitle>by {{ book.author }}</mat-card-subtitle>
+
           <div class="card-actions">
             <button mat-icon-button class="edit-btn" (click)="editBook(book, i)">
               <mat-icon>edit</mat-icon>
@@ -33,6 +47,7 @@
       </mat-card>
     </mat-grid-tile>
 
+    <!-- Add New Book Card -->
     <mat-grid-tile>
       <mat-card class="book-card add-book-card" (click)="toggleDisplay()">
         <mat-card-content>
@@ -45,9 +60,4 @@
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
-
-  <div *ngIf="dataSource.length === 0" class="no-data-message">
-    <mat-icon>menu_book</mat-icon>
-    <p>No book recommendations available.</p>
-  </div>
 </div>

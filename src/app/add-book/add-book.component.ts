@@ -50,6 +50,7 @@ export class AddBookComponent implements OnInit {
   }
 
   onClose(): void {
+    this.bookForm.reset(); 
     this.close.emit(); // Emit close event
   }
 

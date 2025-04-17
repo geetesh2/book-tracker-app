@@ -4,16 +4,19 @@
     <p>No book recommendations found.</p>
   </div>
 
+  <h1 *ngIf="dataSource.length > 0" class="section-heading">
+    Discover your next great read below.
+  </h1>
+
   <mat-grid-list
     *ngIf="dataSource.length > 0"
     [cols]="gridCols"
-    rowHeight="350px"
+    rowHeight="1:1.3"
     gutterSize="16px"
   >
     <mat-grid-tile *ngFor="let book of dataSource">
       <mat-card class="book-card">
         <img mat-card-image [src]="book.url" alt="{{ book.name }}" />
-
         <mat-card-content>
           <mat-card-title>{{ book.name }}</mat-card-title>
           <mat-card-subtitle>Author: {{ book.author }}</mat-card-subtitle>

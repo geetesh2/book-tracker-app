@@ -29,11 +29,13 @@ export class LoginComponent implements OnInit
     this.isSignup = !this.isSignup;
   }
 
-  onSubmit() {
+  onSubmit(form: any) {
+    if (form.invalid) return;
+  
     if (this.isSignup) {
       this.userService.signUp(this.email, this.password);
     } else {
       this.userService.logInUser(this.email, this.password);
     }
-  }
+  }  
 }

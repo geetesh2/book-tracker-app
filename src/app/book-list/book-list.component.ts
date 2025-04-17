@@ -17,17 +17,16 @@ import { Subject, takeUntil } from 'rxjs';
   selector: 'app-book-list',
   standalone: true,
   imports: [
-    MatTableModule, // For displaying books in a table
-    MatButtonModule, // For buttons like 'Add Book'
-    MatDividerModule, // For dividing sections
-    MatIconModule, // For using material icons
-    MatCardModule, // To use cards if necessary
-    MatFormFieldModule, // For material form fields
-    MatInputModule, // For material input fields
-    CommonModule, // For common directives like *ngIf and *ngFor
+    MatTableModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CommonModule,
     AddBookComponent,
     MatGridListModule,
-    // Custom standalone component for adding books
   ],
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css'],
@@ -62,7 +61,6 @@ export class BookListComponent implements OnInit, OnDestroy {
     this.bookService.books$
       .pipe(takeUntil(this.destroyed))
       .subscribe((books) => {
-
         this.dataSource = books;
       });
 
@@ -71,6 +69,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   }
 
   toggleDisplay() {
+    if (this.isForm) (this.selectedBook = null), (this.pos = null);
     this.isForm = !this.isForm;
   }
 

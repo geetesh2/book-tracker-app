@@ -2,10 +2,26 @@
   <div class="form-container">
     <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
       <label for="book-name">Book Name: </label>
-      <input id="book-name" type="text" formControlName="name" />
+      <input
+        id="book-name"
+        type="text"
+        formControlName="name"
+        placeholder="Enter Book Title"
+      />
+      <div *ngIf="bookForm.get('name')?.touched && bookForm.get('name')?.hasError('required')" class="error">
+        Book name is required.
+      </div>
 
       <label for="author-name">Author Name: </label>
-      <input id="author-name" type="text" formControlName="author" />
+      <input
+        id="author-name"
+        type="text"
+        formControlName="author"
+        placeholder="Enter Book Author's Name"
+      />
+      <div *ngIf="bookForm.get('author')?.touched && bookForm.get('author')?.hasError('required')" class="error">
+        Author name is required.
+      </div>
 
       <label for="image-url">Image URL: </label>
       <input
@@ -14,17 +30,15 @@
         formControlName="imageUrl"
         placeholder="Enter Image URL"
       />
+      <div *ngIf="bookForm.get('imageUrl')?.touched && bookForm.get('imageUrl')?.hasError('required')" class="error">
+        Image URL is required.
+      </div>
 
       <div class="example-button-row">
         <button mat-raised-button color="primary" type="submit">Submit</button>
       </div>
       <div class="example-button-row">
-        <button
-          mat-raised-button
-          color="warn"
-          type="button"
-          (click)="onClose()"
-        >
+        <button mat-raised-button color="warn" type="button" (click)="onClose()">
           Cancel
         </button>
       </div>
