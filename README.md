@@ -1,27 +1,77 @@
-# BookTrackerApp
+# 📚 Book Tracker App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.9.
+A sleek and intuitive web application to help you track your reading journey.  
+Whether you're an avid reader or just getting started, this app allows you to manage your books seamlessly.
 
-## Development server
+## 🚀 Live Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Check out the live version of the app here: [Book Tracker App](https://geetesh2.github.io/book-tracker-app/login)
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🛠️ Features
 
-## Build
+- **User Authentication** – Secure login system to keep your data private
+- **Add Books** – Add books to your reading list with title, author, and genre
+- **Track Progress** – Mark books as 'Reading', 'Completed', or 'Want to Read'
+- **Edit & Delete** – Update or remove entries from your list
+- **Responsive Design** – Optimized for all screen sizes
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🧰 Technologies Used
 
-## Running unit tests
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Frameworks/Libraries**: React.js *(if used)*
+- **Styling**: Bootstrap
+- **Authentication**: Firebase Authentication *(if used)*
+- **Database**: Firebase Firestore *(if used)*
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 📦 Installation
 
-## Running end-to-end tests
+```bash
+# Clone the repository
+git clone https://github.com/geetesh2/book-tracker-app.git
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# Navigate to the project directory
+cd book-tracker-app
 
-## Further help
+# Install dependencies
+npm install
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Start the development server
+npm start
+```
+
+## 🗂️ Project Structure
+
+```
+book-tracker-app/
+├── public/
+│   ├── index.html
+│   └── ...
+├── src/
+│   ├── components/
+│   │   ├── Header.ts
+│   │   ├── BookList.ts
+│   │   └── ...
+│   ├── App.js
+│   ├── index.js
+│   └── ...
+├── package.json
+└── README.md
+```
+
+## 🧑‍💻 Contributing
+
+Contributions are welcome!  
+If you have suggestions for improvements or new features, feel free to fork the repository and submit a pull request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 📬 Contact
+
+For any inquiries or feedback, feel free to reach out:  
+📧 [geeteshpandey2@gmail.com](mailto:geeteshpandey2@gmail.com)
+
+
+
